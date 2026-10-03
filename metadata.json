@@ -1,0 +1,6 @@
+{
+  "name": "AI University Assistant",
+  "description": "Modern AI-powered University Student Assistant providing instant answers on admissions, courses, scholarships, campus services, and academic guidelines.",
+  "requestFramePermissions": [],
+  "majorCapabilities": ["MAJOR_CAPABILITY_SERVER_SIDE_GEMINI_API"]
+}
