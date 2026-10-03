@@ -122,6 +122,11 @@ Backend URL:
 http://127.0.0.1:8002
 ```
 
+The Vite development server proxies frontend `/api` requests to this backend,
+so the browser does not need to connect directly to the backend port. When
+using port forwarding, forward the frontend port (`3000`); keep the backend
+running on port `8002` on the same machine as the Vite server.
+
 Health Check:
 
 ```text

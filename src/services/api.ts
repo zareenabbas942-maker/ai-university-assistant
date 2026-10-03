@@ -1,6 +1,6 @@
 import { ChatRequest, ChatResponse } from '../types/chat';
 
-export const API_BASE_URL = 'http://localhost:8002';
+export const API_BASE_URL = '/api';
 
 export async function sendChatMessage(
   request: ChatRequest
@@ -11,7 +11,7 @@ export async function sendChatMessage(
     throw new Error('Please enter a question before sending.');
   }
 
-  const response = await fetch(`${API_BASE_URL}/api/chat`, {
+  const response = await fetch(`${API_BASE_URL}/chat`, {
     method: 'POST',
     headers: {
       'Content-Type': 'application/json',
