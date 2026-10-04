@@ -177,15 +177,22 @@ the backend separately, then add the following environment variable in the
 Vercel project settings:
 
 ```text
-VITE_API_BASE_URL=https://your-backend-host.example/api
+VITE_API_BASE_URL=https://your-render-service.onrender.com/api
 ```
 
-Use the public HTTPS URL of your backend and include `/api` at the end (without
-a trailing slash). Allow your Vercel site's origin in the backend's CORS
-configuration, then redeploy the frontend so Vite can include the variable in
-the production build. For local development, leave this variable unset; the
-frontend continues to use `/api` through the Vite proxy to
+Set this variable in the Vercel project that builds `ai-university-assistant`.
+Use your Render service's public HTTPS URL; the frontend accepts either the
+service root (for example, `https://your-render-service.onrender.com`) or that
+URL with `/api` appended. After saving the variable, redeploy the frontend so
+Vite can include it in the production build. For local development, leave this
+variable unset; the frontend continues to use `/api` through the Vite proxy to
 `http://127.0.0.1:8002`.
+
+The backend chat endpoint is `POST /api/chat`; its health check is
+`GET /api/health`. Open the health-check URL in a browser to confirm the Render
+service is running. The backend already allows standard `*.vercel.app`
+origins. If you use a custom frontend domain, add its origin to the backend's
+comma-separated `CORS_ORIGINS` setting and redeploy the backend.
 
 ## Testing
 

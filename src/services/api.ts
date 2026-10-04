@@ -1,8 +1,15 @@
 import { ChatRequest, ChatResponse } from '../types/chat';
 
-export const API_BASE_URL = (
-  import.meta.env.VITE_API_BASE_URL || '/api'
-).replace(/\/+$/, '');
+const configuredApiBaseUrl = import.meta.env.VITE_API_BASE_URL?.trim();
+const normalizedApiBaseUrl = configuredApiBaseUrl?.replace(/\/+$/, '');
+
+export const API_BASE_URL = configuredApiBaseUrl
+  ? /\/api$/i.test(normalizedApiBaseUrl ?? '')
+    ? normalizedApiBaseUrl
+    : `${normalizedApiBaseUrl}/api`
+  : import.meta.env.PROD
+    ? ''
+    : '/api';
 
 export async function sendChatMessage(
   request: ChatRequest
@@ -13,7 +20,14 @@ export async function sendChatMessage(
     throw new Error('Please enter a question before sending.');
   }
 
-  const response = await fetch(`${API_BASE_URL}/chat`, {
+  if (!API_BASE_URL) {
+    throw new Error(
+      'VITE_API_BASE_URL is not configured. Set it in Vercel to your Render backend URL, then redeploy.'
+    );
+  }
+
+  const chatEndpoint = `${API_BASE_URL}/chat`;
+  const response = await fetch(chatEndpoint, {
     method: 'POST',
     headers: {
       'Content-Type': 'application/json',
@@ -24,7 +38,9 @@ export async function sendChatMessage(
   });
 
   if (!response.ok) {
-    throw new Error(`Backend returned status ${response.status}`);
+    throw new Error(
+      `Backend returned status ${response.status} from ${chatEndpoint}`
+    );
   }
 
   const data = await response.json();
