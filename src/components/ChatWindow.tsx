@@ -158,7 +158,7 @@ Select one of the suggested questions below or type your question in the message
 
 ${errorMsg}
 
-Please make sure the FastAPI backend is running on port 8002.`,
+Check that the FastAPI backend is reachable and the frontend API URL is configured correctly.`,
         timestamp: new Date().toLocaleTimeString([], {
           hour: '2-digit',
           minute: '2-digit',

@@ -1,6 +1,8 @@
 import { ChatRequest, ChatResponse } from '../types/chat';
 
-export const API_BASE_URL = '/api';
+export const API_BASE_URL = (
+  import.meta.env.VITE_API_BASE_URL || '/api'
+).replace(/\/+$/, '');
 
 export async function sendChatMessage(
   request: ChatRequest

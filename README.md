@@ -169,6 +169,24 @@ npm run build
 
 The production files are generated inside the `dist` folder.
 
+## Deploying the Frontend to Vercel
+
+The Vite proxy configured for `/api` only runs during local development. It does
+not forward requests from a deployed Vercel site to the FastAPI backend. Deploy
+the backend separately, then add the following environment variable in the
+Vercel project settings:
+
+```text
+VITE_API_BASE_URL=https://your-backend-host.example/api
+```
+
+Use the public HTTPS URL of your backend and include `/api` at the end (without
+a trailing slash). Allow your Vercel site's origin in the backend's CORS
+configuration, then redeploy the frontend so Vite can include the variable in
+the production build. For local development, leave this variable unset; the
+frontend continues to use `/api` through the Vite proxy to
+`http://127.0.0.1:8002`.
+
 ## Testing
 
 The chatbot has been tested with questions related to:
